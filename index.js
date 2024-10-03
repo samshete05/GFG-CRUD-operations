@@ -19,13 +19,13 @@ const port = 8001
 //Middleware
 app.use(express.json())
 
-// app.post('/add',async(req,res)=>{
-//     console.log(req.body)
-//     const studentData = req.body
-//     const students = new student_records(studentData)
-//     let data = await students.save()
-//     res.send(data)
-// })
+app.post('/add',async(req,res)=>{
+    console.log(req.body)
+    const studentData = req.body
+    const students = new student_records(studentData)
+    let data = await students.save()
+    res.send(data)
+})
 
 app.get("/add",async(req,res)=>{
     let data = await student_records.find()
@@ -59,3 +59,4 @@ app.delete("/add/:id",async (req, res) => {
 app.listen(port,()=>{
     console.log(`server is running on port ${port}`)
 })
+
