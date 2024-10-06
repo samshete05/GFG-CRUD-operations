@@ -4,6 +4,7 @@
     const connectDB = require("./Database/database")
     const student_records = require("./Schema/Records")
     const mongoose = require("mongoose");
+    const bcrypt = require('bcrypt');
 
     const app = express()
     const port = 8001
@@ -26,21 +27,39 @@
         console.log(data)
     })
 
-//update method
-    app.put("/add/:id",async(req,res)=>{
-    const StudentId=req.params.id
-    try{
-        const UpdateStudent = await student_records.findByIdAndUpdate(StudentId,req.body,{new:true})
-        if(!UpdateStudent){
-            res.send("Student Not found by this ID")
+    app.patch("/add/:id", async (req, res) => {
+        const StudentId = req.params.id;
+        const { Email } = req.body;  // Change here
+    
+        try {
+            // Ensure the Email is provided
+            if (!Email) {
+                return res.status(400).send({ error: 'Email is required.' });
+            }
+    
+            console.log("Updating student ID:", StudentId);
+            console.log("Request body:", req.body);
+    
+            const updatedStudent = await student_records.findByIdAndUpdate(
+                StudentId,
+                { Email: Email },  // Change here
+                { new: true }
+            );
+    
+            console.log("Updated Student:", updatedStudent); // Log the result
+    
+            if (!updatedStudent) {
+                return res.status(404).send("Student not found by this ID.");
+            } else {
+                return res.status(200).send(updatedStudent);
+            }
+        } catch (err) {
+            console.error("Update Error:", err.message);
+            return res.status(500).send({ error: 'Error in updating student email.' });
         }
-        else{
-            res.status(200).send(UpdateStudent)
-        }
-    }catch(err){
-            res.status(500).send({ error: 'Error in updating Student Record.' })
-    }
-    })
+    });
+    
+    
 
     //delete method
     app.delete("/add/:id",async (req, res) => {
