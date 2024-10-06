@@ -29,24 +29,24 @@
 
     app.patch("/add/:id", async (req, res) => {
         const StudentId = req.params.id;
-        const { Email } = req.body;  // Change here
+        const { Email } = req.body;  
     
         try {
-            // Ensure the Email is provided
+        
             if (!Email) {
                 return res.status(400).send({ error: 'Email is required.' });
             }
     
-            console.log("Updating student ID:", StudentId);
-            console.log("Request body:", req.body);
+            console.log( StudentId);
+            console.log( req.body);
     
             const updatedStudent = await student_records.findByIdAndUpdate(
                 StudentId,
-                { Email: Email },  // Change here
+                { Email: Email }, 
                 { new: true }
             );
     
-            console.log("Updated Student:", updatedStudent); // Log the result
+            console.log(updatedStudent); 
     
             if (!updatedStudent) {
                 return res.status(404).send("Student not found by this ID.");
