@@ -12,3 +12,17 @@ It is user-friendly to manage the student Records and also add validation for in
 Adding Restful APIs to handle CRUD opertions.
 
 I have use Node.js(For javascript runtime environment) and Express.js(Web framework) also Git.
+
+Example - 
+- Request -
+{
+    "longUrl": "https://www.example.com/some/long/url"
+
+}
+
+- Response -
+- {
+    "shortUrl": "http://localhost:3000/abc123",
+    "clicks": 0
+}
+
